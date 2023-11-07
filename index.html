@@ -72,19 +72,18 @@ let d = (1 + (k * phi)) / e;
 let msg = 12;
  
 
-console.log("Message data = " + msg);
+document.write("Message data = " + msg);
  
 // Encryption c = (msg ^ e) % n
 let c = Math.pow(msg, e);
 c = c % n;
-
-console.log("Encrypted data = " + c);
+document.write("Encrypted data = " + c);
  
 // Decryption m = (c ^ d) % n
 let m = Math.pow(c, d);
 m = m % n;
 
-console.log("Original Message Sent = " + m);
+document.write("Original Message Sent = " + m);
  
 //This code is written by Sundaram
 	

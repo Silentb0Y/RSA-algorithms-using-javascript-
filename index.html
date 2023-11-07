@@ -3,83 +3,91 @@
 <head>
 </head>
 <body>
-<center>
-<h2>Monoalphabetic Ciphering / Deciphering</h2>
-<br>
-  <textarea rows="4" cols="50"  id="textbox"></textarea>
-<br>
-<button id="btn">Cipher</button>
-<button id="debtn">Decipher</button>
-<br>
-<hr>
-<h2>Key</h2>
 
-<textarea rows="1" cols="50" id="Key"></textarea>
+<h2> RSA algorithms using javascript </h2>
 
-<br>
-<h2>Result</h2>
-
-<textarea rows="4"  cols="50" id="result"></textarea>
-
-</center>
 
 <script>
-var shuffledArr;
-let alphabetArr = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
-function shuffle(array) {
-	let shuffledArray = array.slice(0,array.length)
-	var currentIndex = shuffledArray.length;
-	var temporaryValue, randomIndex;
 
-	while (0 !== currentIndex) {
-		randomIndex = Math.floor(Math.random() * currentIndex);
-		currentIndex -= 1;
 
-		temporaryValue = shuffledArray[currentIndex];
-		shuffledArray[currentIndex] = shuffledArray[randomIndex];
-		shuffledArray[randomIndex] = temporaryValue;
-	}
+//GFG
+//Javascript code for this approach
 
-	return shuffledArray;
+function gcd(a, h) {
+
+  /*
+
+   * This function returns the gcd or greatest common
+
+   * divisor
+
+   */
+
+  let temp;
+
+  while (true) {
+
+    temp = a % h;
+
+    if (temp == 0) return h;
+
+    a = h;
+
+    h = temp;
+
+  }
+}
+ 
+let p = 3;
+let q = 7;
+ 
+// Stores the first part of public key:
+let n = p * q;
+ 
+// Finding the other part of public key.
+// e stands for encrypt
+let e = 2;
+let phi = (p - 1) * (q - 1);
+
+while (e < phi) {
+
+  /*
+
+   * e must be co-prime to phi and
+
+   * smaller than phi.
+
+   */
+
+  if (gcd(e, phi) == 1) break;
+
+  else e++;
 }
 
-function cipher(){
-shuffledArr = shuffle(alphabetArr);
-document.getElementById("Key").innerHTML = shuffledArr.join().replace(/,/g, '')
+let k = 2; // A constant value
+let d = (1 + (k * phi)) / e;
+ 
+// Message to be encrypted
+let msg = 12;
+ 
 
-var textArr = document.getElementById("textbox").value.split("");
-for(let k=0; k<textArr.length; k++){
-if ((textArr[k] == ' ') || (textArr[k] == '\t') || (textArr[k] == '\n' || alphabetArr.indexOf(textArr[k].toUpperCase())==-1)){
-continue;
+console.log("Message data = " + msg);
+ 
+// Encryption c = (msg ^ e) % n
+let c = Math.pow(msg, e);
+c = c % n;
 
-}else
-textArr[k]=shuffledArr[alphabetArr.indexOf(textArr[k].toUpperCase())];
-	}
-document.getElementById("result").innerHTML = textArr.join().replace(/,/g, '')
-}
+console.log("Encrypted data = " + c);
+ 
+// Decryption m = (c ^ d) % n
+let m = Math.pow(c, d);
+m = m % n;
+
+console.log("Original Message Sent = " + m);
+ 
+//This code is written by Sundaram
 	
-	
-function decipher(){
-var textArr = document.getElementById("result").value.split("");
-for(let k=0; k<textArr.length;k++){
-if ((textArr[k] == ' ') || (textArr[k] == '\t') || (textArr[k] == '\n' || alphabetArr.indexOf(textArr[k].toUpperCase())==-1)){
-continue;
-
-}else
-textArr[k]=alphabetArr[shuffledArr.indexOf(textArr[k].toUpperCase())];
-}document.getElementById("result").innerHTML = textArr.join().replace(/,/g, '')
-}
-	
-
-	document.getElementById("btn").onclick=function(){
-	cipher();
-	}
-	
-	document.getElementById("debtn").onclick=function(){
-	decipher();
-	}
-
 </script>
 </body>
 </html>
